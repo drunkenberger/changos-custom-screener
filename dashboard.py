@@ -4,6 +4,10 @@ Dashboard personalizado para análisis de acciones y opciones
 RAYGUN AESTHETIC EDITION
 """
 
+import os
+# Configure OpenBB to use /tmp for Streamlit Cloud compatibility
+os.environ['OPENBB_HOME'] = '/tmp/openbb'
+
 import streamlit as st
 import pandas as pd
 import plotly.graph_objects as go
