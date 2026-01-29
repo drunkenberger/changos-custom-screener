@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: changos-screener
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: streamlit run dashboard.py --server.port $PORT --server.address 0.0.0.0 --server.headless true
+    envVars:
+      - key: OPENBB_HOME
+        value: /tmp/openbb
+      - key: PYTHON_VERSION
+        value: "3.11"
