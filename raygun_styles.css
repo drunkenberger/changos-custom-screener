@@ -1,0 +1,1559 @@
+/* ============================================
+   RAYGUN AESTHETIC - CHANGO'S ULTIMATE SCREENER
+   Inspired by David Carson's Ray Gun Magazine
+   PREMIUM EDITION - Maximum Visual Impact
+   ============================================ */
+
+/* === FONTS === */
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&family=Permanent+Marker&family=Press+Start+2P&display=swap');
+
+/* === ROOT VARIABLES === */
+:root {
+    /* Colors */
+    --raygun-bg-dark: #0D0D0D;
+    --raygun-bg-card: #1A1A2E;
+    --raygun-neon-pink: #FF00FF;
+    --raygun-neon-cyan: #66E0E0;
+    --raygun-neon-green: #66FF66;
+    --raygun-hot-pink: #FF3366;
+    --raygun-electric-yellow: #FFE600;
+    --raygun-grunge-orange: #FF6B35;
+    --raygun-text-light: #E0E0E0;
+    --raygun-text-muted: #A0A0A0;
+
+    /* Spacing System (8px base) */
+    --space-1: 0.25rem;   /* 4px */
+    --space-2: 0.5rem;    /* 8px */
+    --space-3: 0.75rem;   /* 12px */
+    --space-4: 1rem;      /* 16px */
+    --space-5: 1.25rem;   /* 20px */
+    --space-6: 1.5rem;    /* 24px */
+    --space-8: 2rem;      /* 32px */
+    --space-10: 2.5rem;   /* 40px */
+    --raygun-noise: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%' height='100%' filter='url(%23noise)' opacity='0.08'/%3E%3C/svg%3E");
+}
+
+/* === STREAMLIT HEADER BAR (Deploy button area) === */
+header[data-testid="stHeader"],
+.stAppHeader,
+[data-testid="stHeader"] {
+    background: var(--raygun-bg-dark) !important;
+    background-color: #0D0D0D !important;
+    border-bottom: 1px solid var(--raygun-neon-pink) !important;
+    z-index: 10000 !important;
+    position: relative !important;
+}
+
+/* Style the toolbar/menu area */
+[data-testid="stToolbar"],
+.stToolbar {
+    background: transparent !important;
+}
+
+/* Style the Deploy button and menu */
+[data-testid="stHeader"] button,
+[data-testid="stHeader"] [data-testid="baseButton-header"] {
+    color: var(--raygun-text-light) !important;
+    background: transparent !important;
+}
+
+[data-testid="stHeader"] button:hover {
+    color: var(--raygun-neon-pink) !important;
+    background: rgba(255, 0, 255, 0.1) !important;
+}
+
+/* Three-dot menu icon */
+[data-testid="stHeader"] svg {
+    fill: var(--raygun-text-light) !important;
+}
+
+[data-testid="stHeader"] svg:hover {
+    fill: var(--raygun-neon-pink) !important;
+}
+
+/* === MAIN APP TITLE - FORCE SIZE === */
+h1.main-app-title,
+.main-app-title,
+[class*="main-app-title"] {
+    font-size: 6.2vw !important;
+    letter-spacing: 0.02em !important;
+    white-space: nowrap !important;
+    overflow: visible !important;
+    transform: none !important;
+    line-height: 1 !important;
+}
+
+/* === GLOBAL FOOTER - Spans entire width === */
+.raygun-global-footer {
+    position: fixed !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 32px !important;
+    background: linear-gradient(90deg, #0D0D0D 0%, #1A1A2E 50%, #0D0D0D 100%) !important;
+    border-top: 2px solid var(--raygun-neon-pink, #FF00FF) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    z-index: 1000000 !important;
+    box-shadow: 0 -4px 20px rgba(255, 0, 255, 0.2) !important;
+}
+
+.raygun-global-footer span {
+    font-family: 'Space Mono', monospace !important;
+    font-size: 0.7rem !important;
+    letter-spacing: 0.2em !important;
+    text-transform: uppercase !important;
+    color: var(--raygun-text-muted, #A0A0A0) !important;
+    text-shadow: 0 0 8px rgba(255, 0, 255, 0.3) !important;
+}
+
+.raygun-global-footer::before {
+    content: "///";
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    color: var(--raygun-neon-pink, #FF00FF);
+    margin-right: 12px;
+    opacity: 0.6;
+}
+
+.raygun-global-footer::after {
+    content: "///";
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    color: var(--raygun-neon-pink, #FF00FF);
+    margin-left: 12px;
+    opacity: 0.6;
+}
+
+/* === MAIN APP - FULL WIDTH UTILIZATION === */
+.stApp {
+    background-color: var(--raygun-bg-dark) !important;
+    background-image: var(--raygun-noise),
+        linear-gradient(135deg, #0D0D0D 0%, #1A1A2E 50%, #0D0D0D 100%) !important;
+    background-attachment: fixed !important;
+}
+
+/* Remove default Streamlit padding waste */
+.main .block-container {
+    padding: 0.75rem 1.5rem 40px 1.5rem !important;
+    max-width: 100% !important;
+}
+
+/* === SCANLINES OVERLAY === */
+.stApp::after {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    background: repeating-linear-gradient(
+        0deg,
+        rgba(0, 0, 0, 0.12),
+        rgba(0, 0, 0, 0.12) 1px,
+        transparent 1px,
+        transparent 3px
+    );
+    z-index: 9999;
+    opacity: 0.25;
+}
+
+/* === SIDEBAR COLLAPSE/EXPAND BUTTON - ALWAYS VISIBLE === */
+[data-testid="collapsedControl"],
+[data-testid="stSidebarCollapseButton"],
+button[kind="header"],
+[data-testid="stSidebar"] button[kind="header"],
+.st-emotion-cache-1gwvy71,
+[data-testid="baseButton-headerNoPadding"],
+[data-testid="stSidebarNav"] button,
+section[data-testid="stSidebar"] > button {
+    background: #1A1A2E !important;
+    border: 2px solid #FF00FF !important;
+    color: #FF00FF !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    display: flex !important;
+    z-index: 99999 !important;
+}
+
+[data-testid="collapsedControl"] svg,
+[data-testid="stSidebarCollapseButton"] svg,
+button[kind="header"] svg,
+[data-testid="baseButton-headerNoPadding"] svg,
+section[data-testid="stSidebar"] > button svg,
+[data-testid="collapsedControl"] svg *,
+[data-testid="stSidebarCollapseButton"] svg *,
+button[kind="header"] svg *,
+section[data-testid="stSidebar"] > button svg *,
+[data-testid="collapsedControl"] svg path,
+[data-testid="collapsedControl"] svg line,
+[data-testid="collapsedControl"] svg polyline {
+    color: #00FFFF !important;
+    fill: #00FFFF !important;
+    stroke: #00FFFF !important;
+    stroke-width: 3px !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    filter: drop-shadow(0 0 4px #00FFFF) !important;
+}
+
+[data-testid="collapsedControl"]:hover,
+[data-testid="stSidebarCollapseButton"]:hover,
+button[kind="header"]:hover,
+[data-testid="baseButton-headerNoPadding"]:hover,
+section[data-testid="stSidebar"] > button:hover {
+    background: #FF00FF !important;
+    border-color: #00FFFF !important;
+}
+
+[data-testid="collapsedControl"]:hover svg,
+[data-testid="stSidebarCollapseButton"]:hover svg,
+button[kind="header"]:hover svg,
+section[data-testid="stSidebar"] > button:hover svg {
+    color: #FFFFFF !important;
+    fill: #FFFFFF !important;
+    stroke: #FFFFFF !important;
+}
+
+/* === SIDEBAR - COMPACT & POWERFUL === */
+[data-testid="stSidebar"] {
+    background: linear-gradient(180deg, #0D0D0D 0%, #1A1A2E 50%, #0D0D0D 100%) !important;
+    border-right: 4px solid var(--raygun-neon-pink) !important;
+    box-shadow: 8px 0 40px rgba(255, 0, 255, 0.4) !important;
+}
+
+/* Main scrollable container in sidebar */
+[data-testid="stSidebar"] > div:first-child {
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    max-height: 100vh !important;
+    padding: 0.75rem 1rem !important;
+    padding-bottom: 50px !important;
+}
+
+/* Custom scrollbar for sidebar */
+[data-testid="stSidebar"] > div:first-child::-webkit-scrollbar {
+    width: 8px !important;
+}
+
+[data-testid="stSidebar"] > div:first-child::-webkit-scrollbar-track {
+    background: #0D0D0D !important;
+}
+
+[data-testid="stSidebar"] > div:first-child::-webkit-scrollbar-thumb {
+    background: var(--raygun-neon-pink) !important;
+    border-radius: 0 !important;
+}
+
+[data-testid="stSidebar"] > div:first-child::-webkit-scrollbar-thumb:hover {
+    background: var(--raygun-neon-cyan) !important;
+}
+
+/* === TYPOGRAPHY - IMPACTFUL & BOLD === */
+h1 {
+    font-family: 'Bebas Neue', Impact, sans-serif !important;
+    font-size: clamp(1.8rem, 3.75vw, 2.4rem);
+    letter-spacing: 0.08em;
+    text-transform: uppercase !important;
+    color: var(--raygun-text-light);
+    text-shadow:
+        3px 3px 0 var(--raygun-neon-pink),
+        -1px -1px 0 var(--raygun-neon-cyan),
+        4px 0 15px rgba(255, 0, 255, 0.5);
+    transform: rotate(-0.5deg);
+    border-bottom: none !important;
+    padding-bottom: 0.3rem;
+    margin-bottom: 0.75rem;
+    margin-top: 0;
+    position: relative;
+    line-height: 1.1;
+    white-space: nowrap !important;
+    overflow: visible !important;
+}
+
+h1::after {
+    content: "";
+    position: absolute;
+    bottom: -6px;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg,
+        var(--raygun-neon-pink) 0%,
+        var(--raygun-neon-cyan) 50%,
+        var(--raygun-neon-green) 100%);
+    box-shadow: 0 0 15px var(--raygun-neon-pink);
+}
+
+h2 {
+    font-family: 'Bebas Neue', Impact, sans-serif !important;
+    font-size: 1.1rem !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.08em !important;
+    color: var(--raygun-neon-cyan) !important;
+    border-left: 4px solid var(--raygun-hot-pink) !important;
+    padding: 5px 10px !important;
+    margin: 0.75rem 0 0.5rem 0 !important;
+    text-shadow: 0 0 8px rgba(0, 255, 255, 0.4) !important;
+    line-height: 1.2 !important;
+    background: linear-gradient(90deg,
+        rgba(255, 0, 255, 0.15) 0%,
+        transparent 60%) !important;
+    transform: translateX(-3px) !important;
+    clip-path: polygon(0 0, 100% 4%, 100% 96%, 0 100%) !important;
+}
+
+h3 {
+    font-family: 'Space Mono', monospace !important;
+    font-size: clamp(0.85rem, 1.5vw, 1rem) !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.12em !important;
+    color: var(--raygun-electric-yellow) !important;
+    position: relative;
+    display: inline-block;
+    margin: 0.75rem 0 0.5rem 0 !important;
+    line-height: 1.3 !important;
+    text-shadow: 2px 2px 8px rgba(255, 230, 0, 0.3) !important;
+}
+
+h3::before {
+    content: ">> ";
+    color: var(--raygun-neon-pink);
+    font-weight: bold;
+}
+
+/* === TABS - BOLD & PROMINENT === */
+.stTabs [data-baseweb="tab-list"] {
+    background: rgba(13, 13, 13, 0.8) !important;
+    gap: 8px !important;
+    border-bottom: 2px solid var(--raygun-neon-pink) !important;
+    flex-wrap: wrap !important;
+    padding: 12px 8px 8px 8px !important;
+    border-radius: 8px 8px 0 0 !important;
+    justify-content: center !important;
+}
+
+.stTabs [data-baseweb="tab"] {
+    font-family: 'Bebas Neue', sans-serif !important;
+    font-size: clamp(1rem, 2vw, 1.2rem) !important;
+    letter-spacing: 0.1em !important;
+    text-transform: uppercase !important;
+    color: var(--raygun-text-light) !important;
+    background: linear-gradient(145deg, rgba(26, 26, 46, 0.9) 0%, rgba(13, 13, 13, 0.95) 100%) !important;
+    border: 1px solid var(--raygun-grid) !important;
+    border-radius: 6px !important;
+    padding: 12px 20px !important;
+    margin: 0 4px !important;
+    transition: all 0.25s ease !important;
+    position: relative;
+    white-space: nowrap !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3) !important;
+}
+
+.stTabs [data-baseweb="tab"]:hover {
+    color: var(--raygun-neon-cyan) !important;
+    text-shadow: 0 0 12px var(--raygun-neon-cyan) !important;
+    border-color: var(--raygun-neon-cyan) !important;
+    background: linear-gradient(145deg, rgba(26, 26, 46, 1) 0%, rgba(42, 42, 78, 0.8) 100%) !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 4px 15px rgba(102, 224, 224, 0.3) !important;
+}
+
+.stTabs [data-baseweb="tab"]::before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background: var(--raygun-neon-cyan);
+    transition: all 0.3s ease;
+    transform: translateX(-50%);
+    border-radius: 2px;
+}
+
+.stTabs [data-baseweb="tab"]:hover::before {
+    width: 70%;
+}
+
+.stTabs [aria-selected="true"] {
+    color: #FFFFFF !important;
+    background: linear-gradient(145deg, rgba(255, 0, 255, 0.25) 0%, rgba(102, 224, 224, 0.15) 100%) !important;
+    text-shadow: 0 0 15px var(--raygun-neon-pink) !important;
+    border: 2px solid var(--raygun-neon-pink) !important;
+    transform: translateY(-3px) scale(1.02) !important;
+    box-shadow: 0 6px 20px rgba(255, 0, 255, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+}
+
+.stTabs [aria-selected="true"]::after {
+    content: "";
+    position: absolute;
+    bottom: -2px;
+    left: 10%;
+    width: 80%;
+    height: 3px;
+    background: linear-gradient(90deg, var(--raygun-neon-pink), var(--raygun-neon-cyan));
+    box-shadow: 0 0 12px var(--raygun-neon-pink);
+    border-radius: 2px;
+}
+
+/* === TAB CONTENT PANELS === */
+.stTabs [data-baseweb="tab-panel"] {
+    padding: var(--space-4) 0 !important;
+}
+
+/* Controls row spacing in tabs */
+.stTabs .stColumns {
+    margin-bottom: var(--space-3) !important;
+}
+
+/* Checkbox styling in tabs */
+.stTabs [data-testid="stCheckbox"] {
+    padding: var(--space-2) var(--space-3) !important;
+    background: rgba(26, 26, 46, 0.6) !important;
+    border: 1px solid var(--raygun-grid) !important;
+    margin: var(--space-1) 0 !important;
+}
+
+.stTabs [data-testid="stCheckbox"]:hover {
+    border-color: var(--raygun-neon-cyan) !important;
+    background: rgba(26, 26, 46, 0.9) !important;
+}
+
+/* Subheaders in tabs */
+.stTabs h2, .stTabs h3 {
+    margin-top: var(--space-6) !important;
+    margin-bottom: var(--space-3) !important;
+}
+
+/* === METRICS - COMPACT & PROMINENT === */
+[data-testid="stMetric"] {
+    background: linear-gradient(145deg,
+        rgba(26, 26, 46, 0.98) 0%,
+        rgba(13, 13, 13, 0.99) 100%) !important;
+    border: 2px solid var(--raygun-neon-pink) !important;
+    border-radius: 0 !important;
+    padding: 0.75rem 1rem !important;
+    position: relative;
+    clip-path: polygon(
+        0 6px, 6px 0, calc(100% - 3px) 0,
+        100% 3px, 100% calc(100% - 6px),
+        calc(100% - 6px) 100%, 3px 100%, 0 calc(100% - 3px)
+    ) !important;
+    box-shadow:
+        3px 3px 0 var(--raygun-neon-cyan),
+        0 0 15px rgba(255, 0, 255, 0.2) !important;
+    transition: all 0.25s ease !important;
+    min-height: auto !important;
+    overflow: hidden !important;
+}
+
+[data-testid="stMetric"]:hover {
+    transform: translate(-2px, -2px) scale(1.02) !important;
+    box-shadow:
+        6px 6px 0 var(--raygun-neon-cyan),
+        0 0 35px rgba(255, 0, 255, 0.4) !important;
+    border-color: var(--raygun-neon-cyan) !important;
+}
+
+/* Metric Labels - Legible */
+[data-testid="stMetric"] label {
+    font-family: 'Space Mono', monospace !important;
+    font-size: 0.7rem !important;
+    font-weight: 600 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.08em !important;
+    color: var(--raygun-neon-cyan) !important;
+    line-height: 1.3 !important;
+    margin-bottom: 2px !important;
+    display: block !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    text-shadow: 0 0 6px rgba(0, 255, 255, 0.25) !important;
+}
+
+/* Metric Values - Legible & Prominent */
+[data-testid="stMetric"] [data-testid="stMetricValue"] {
+    font-family: 'Bebas Neue', sans-serif !important;
+    font-size: 1.1rem !important;
+    color: var(--raygun-text-light) !important;
+    text-shadow:
+        1px 1px 0 rgba(255, 0, 255, 0.25),
+        0 0 8px rgba(255, 255, 255, 0.2) !important;
+    line-height: 1.2 !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    letter-spacing: 0.02em !important;
+}
+
+/* Metric Delta - Visible & Clear */
+[data-testid="stMetric"] [data-testid="stMetricDelta"] {
+    font-family: 'Space Mono', monospace !important;
+    margin-top: 6px !important;
+}
+
+[data-testid="stMetric"] [data-testid="stMetricDelta"] svg {
+    display: none !important;
+}
+
+[data-testid="stMetric"] [data-testid="stMetricDelta"] > div {
+    font-size: 1rem !important;
+    font-weight: 700 !important;
+    line-height: 1.2 !important;
+    letter-spacing: 0.05em !important;
+}
+
+/* Diagonal stripe pattern on metric hover */
+[data-testid="stMetric"]::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 10px,
+        rgba(255, 0, 255, 0.03) 10px,
+        rgba(255, 0, 255, 0.03) 20px
+    );
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+[data-testid="stMetric"]:hover::before {
+    opacity: 1;
+}
+
+/* Random rotation for visual chaos */
+[data-testid="stMetric"]:nth-child(1) { transform: rotate(-0.8deg) !important; }
+[data-testid="stMetric"]:nth-child(2) { transform: rotate(0.6deg) !important; }
+[data-testid="stMetric"]:nth-child(3) { transform: rotate(-0.4deg) !important; }
+[data-testid="stMetric"]:nth-child(4) { transform: rotate(0.9deg) !important; }
+[data-testid="stMetric"]:nth-child(5) { transform: rotate(-0.6deg) !important; }
+
+/* === COLUMN LAYOUT - TIGHTER SPACING === */
+[data-testid="stHorizontalBlock"] {
+    gap: 1rem !important;
+}
+
+[data-testid="stHorizontalBlock"] > div {
+    flex: 1 !important;
+}
+
+/* === INPUTS - PROMINENT === */
+.stTextInput input, .stSelectbox select, [data-baseweb="select"] {
+    font-family: 'Space Mono', monospace !important;
+    font-size: 0.8rem !important;
+    background: rgba(13, 13, 13, 0.95) !important;
+    border: 2px solid var(--raygun-neon-cyan) !important;
+    border-radius: 0 !important;
+    color: var(--raygun-text-light) !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.08em !important;
+    padding: 0.5rem 0.75rem !important;
+}
+
+.stTextInput input:focus, .stSelectbox select:focus {
+    border-color: var(--raygun-neon-pink) !important;
+    box-shadow:
+        0 0 12px var(--raygun-neon-pink),
+        inset 0 0 20px rgba(255, 0, 255, 0.1) !important;
+    outline: none !important;
+}
+
+.stTextInput input::placeholder {
+    color: var(--raygun-text-muted) !important;
+    opacity: 0.7 !important;
+    text-transform: none !important;
+}
+
+.stTextInput label, .stSelectbox label {
+    font-family: 'Space Mono', monospace !important;
+    font-size: 0.7rem !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.1em !important;
+    color: var(--raygun-neon-cyan) !important;
+    margin-bottom: 4px !important;
+}
+
+[data-baseweb="select"] > div {
+    background: rgba(13, 13, 13, 0.95) !important;
+    border: 2px solid var(--raygun-neon-cyan) !important;
+    border-radius: 0 !important;
+    min-height: 38px !important;
+    padding: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    position: relative !important;
+}
+
+[data-baseweb="select"] > div > div {
+    padding: 8px 10px !important;
+    line-height: 1.4 !important;
+    display: flex !important;
+    align-items: center !important;
+    width: 100% !important;
+    height: 100% !important;
+    flex: 1 1 auto !important;
+}
+
+/* Fix dropdown layout - text gets full width, arrow at right edge */
+[data-baseweb="select"] > div > div:first-child {
+    flex: 1 1 auto !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    overflow: hidden !important;
+}
+
+[data-baseweb="select"] > div > div:last-child {
+    flex: 0 0 24px !important;
+    width: 24px !important;
+    max-width: 24px !important;
+    min-width: 24px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+[data-baseweb="select"] > div > div > div[value] {
+    width: 100% !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+}
+
+[data-baseweb="select"] svg {
+    width: 16px !important;
+    height: 16px !important;
+    flex-shrink: 0 !important;
+}
+
+/* Force text visibility in dropdowns - comprehensive fix */
+[data-baseweb="select"] * {
+    color: #E0E0E0 !important;
+}
+
+[data-baseweb="select"] svg {
+    fill: #00FFFF !important;
+}
+
+/* Target the value placeholder and selected value containers */
+[data-baseweb="select"] [data-baseweb="select-value-container"],
+[data-baseweb="select"] [class*="valueContainer"],
+[data-baseweb="select"] [class*="singleValue"],
+[data-baseweb="select"] [class*="placeholder"] {
+    color: #E0E0E0 !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    text-indent: 0 !important;
+    overflow: visible !important;
+    -webkit-text-fill-color: #E0E0E0 !important;
+}
+
+[data-baseweb="select"] span,
+[data-baseweb="select"] div[class*="value"] {
+    font-family: 'Space Mono', monospace !important;
+    font-size: 0.85rem !important;
+    color: #FFFFFF !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    -webkit-text-fill-color: #FFFFFF !important;
+}
+
+/* Ensure the control wrapper displays properly */
+[data-baseweb="select"] > div:first-child > div {
+    color: #FFFFFF !important;
+    font-family: 'Space Mono', monospace !important;
+    font-size: 0.85rem !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.05em !important;
+}
+
+/* Fix for Streamlit's stSelectbox specifically */
+.stSelectbox [data-baseweb="select"] {
+    color: #E0E0E0 !important;
+}
+
+.stSelectbox [data-baseweb="select"] > div {
+    color: #E0E0E0 !important;
+}
+
+.stSelectbox [data-baseweb="select"] > div > div {
+    color: #FFFFFF !important;
+    font-family: 'Space Mono', monospace !important;
+    font-size: 0.85rem !important;
+}
+
+/* SIDEBAR SELECTBOX - Force text visibility */
+[data-testid="stSidebar"] .stSelectbox [data-baseweb="select"],
+[data-testid="stSidebar"] .stSelectbox [data-baseweb="select"] * {
+    color: #E0E0E0 !important;
+    -webkit-text-fill-color: #E0E0E0 !important;
+}
+
+[data-testid="stSidebar"] [data-baseweb="select"] > div {
+    background: rgba(13, 13, 13, 0.95) !important;
+    border: 2px solid var(--raygun-neon-cyan) !important;
+    min-height: 36px !important;
+}
+
+[data-testid="stSidebar"] [data-baseweb="select"] > div > div {
+    color: #FFFFFF !important;
+    font-family: 'Space Mono', monospace !important;
+    font-size: 0.8rem !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.05em !important;
+    padding: 6px 8px !important;
+    -webkit-text-fill-color: #FFFFFF !important;
+    display: flex !important;
+    align-items: center !important;
+}
+
+/* Ensure the actual value text is visible */
+[data-testid="stSidebar"] [data-baseweb="select"] [aria-selected="true"],
+[data-testid="stSidebar"] [data-baseweb="select"] [data-value],
+[data-testid="stSidebar"] [data-baseweb="select"] span:not(:empty) {
+    color: #E0E0E0 !important;
+    -webkit-text-fill-color: #E0E0E0 !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+/* Override any text clipping or hiding in selectbox */
+[data-baseweb="select"] div[class*="control"],
+[data-baseweb="select"] div[class*="Control"],
+[data-baseweb="select"] div[class*="single"],
+[data-baseweb="select"] div[class*="Single"] {
+    color: #E0E0E0 !important;
+    overflow: visible !important;
+    text-overflow: unset !important;
+    white-space: normal !important;
+}
+
+/* Dropdown menu styling */
+[data-baseweb="popover"] [role="listbox"],
+[data-baseweb="menu"] {
+    background: #1A1A2E !important;
+    border: 2px solid var(--raygun-neon-cyan) !important;
+}
+
+[data-baseweb="popover"] [role="option"],
+[data-baseweb="menu"] li {
+    color: #E0E0E0 !important;
+    font-family: 'Space Mono', monospace !important;
+    font-size: 0.75rem !important;
+    text-transform: uppercase !important;
+    background: transparent !important;
+}
+
+[data-baseweb="popover"] [role="option"]:hover,
+[data-baseweb="menu"] li:hover {
+    background: rgba(255, 0, 255, 0.2) !important;
+    color: var(--raygun-neon-cyan) !important;
+}
+
+[data-baseweb="popover"] [aria-selected="true"],
+[data-baseweb="menu"] li[aria-selected="true"] {
+    background: rgba(0, 255, 255, 0.15) !important;
+    color: var(--raygun-neon-pink) !important;
+}
+
+/* === BUTTONS - POWERFUL === */
+.stButton button {
+    font-family: 'Bebas Neue', sans-serif !important;
+    font-size: 0.9rem !important;
+    letter-spacing: 0.15em !important;
+    text-transform: uppercase !important;
+    background: linear-gradient(135deg, var(--raygun-neon-pink) 0%, var(--raygun-hot-pink) 100%) !important;
+    color: #000 !important;
+    border: none !important;
+    border-radius: 0 !important;
+    padding: 1rem 2.5rem !important;
+    position: relative;
+    overflow: visible !important;
+    transition: all 0.3s ease !important;
+    clip-path: polygon(
+        14px 0,
+        100% 0,
+        calc(100% - 14px) 100%,
+        0 100%
+    ) !important;
+}
+
+.stButton button:hover {
+    transform: skewX(-5deg) scale(1.03) !important;
+    box-shadow: 0 0 40px var(--raygun-neon-pink) !important;
+}
+
+.stButton button::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+    transition: left 0.5s ease;
+}
+
+.stButton button:hover::before {
+    left: 100%;
+}
+
+.stButton button::after {
+    content: "";
+    position: absolute;
+    top: -3px;
+    right: -3px;
+    width: 10px;
+    height: 10px;
+    background: var(--raygun-neon-cyan);
+    clip-path: polygon(100% 0, 0 0, 100% 100%);
+}
+
+/* === CHECKBOXES === */
+.stCheckbox label {
+    font-family: 'Space Mono', monospace !important;
+    text-transform: uppercase !important;
+    font-size: 1rem !important;
+    letter-spacing: 0.08em !important;
+    color: var(--raygun-text-light) !important;
+}
+
+.stCheckbox [data-testid="stCheckbox"] {
+    position: relative;
+}
+
+.stCheckbox [data-testid="stCheckbox"]::after {
+    content: "";
+    position: absolute;
+    bottom: -3px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, var(--raygun-neon-cyan), transparent);
+    opacity: 0.4;
+}
+
+/* === DATAFRAMES - PROFESSIONAL === */
+[data-testid="stDataFrame"],
+[data-testid="stDataFrame"] > div,
+[data-testid="stDataFrame"] iframe {
+    border: 3px solid var(--raygun-neon-cyan) !important;
+    border-radius: 0 !important;
+    position: relative;
+    background: var(--raygun-bg-dark) !important;
+}
+
+[data-testid="stDataFrame"] th,
+[data-testid="stDataFrame"] [role="columnheader"] {
+    font-family: 'Space Mono', monospace !important;
+    font-size: 0.85rem !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.08em !important;
+    background: var(--raygun-bg-card) !important;
+    color: var(--raygun-neon-pink) !important;
+    border-bottom: 3px solid var(--raygun-neon-pink) !important;
+    padding: 10px 8px !important;
+}
+
+[data-testid="stDataFrame"] td,
+[data-testid="stDataFrame"] [role="gridcell"] {
+    font-family: 'Space Mono', monospace !important;
+    font-size: 0.85rem !important;
+    padding: 8px !important;
+    background: var(--raygun-bg-dark) !important;
+    color: var(--raygun-text-light) !important;
+    border-color: var(--raygun-grid) !important;
+}
+
+[data-testid="stDataFrame"] table,
+[data-testid="stDataFrame"] [role="grid"] {
+    background: var(--raygun-bg-dark) !important;
+}
+
+[data-testid="stDataFrame"] tr:hover td,
+[data-testid="stDataFrame"] [role="row"]:hover [role="gridcell"] {
+    background: var(--raygun-bg-card) !important;
+}
+
+/* Corner marks on dataframes */
+[data-testid="stDataFrame"]::before {
+    content: "+";
+    position: absolute;
+    top: -12px;
+    left: -12px;
+    font-family: 'Space Mono', monospace;
+    font-size: 1.4rem;
+    color: var(--raygun-neon-pink);
+    z-index: 10;
+}
+
+[data-testid="stDataFrame"]::after {
+    content: "+";
+    position: absolute;
+    bottom: -12px;
+    right: -12px;
+    font-family: 'Space Mono', monospace;
+    font-size: 1.4rem;
+    color: var(--raygun-neon-cyan);
+    z-index: 10;
+}
+
+/* === ALERTS/MESSAGES - PROMINENT === */
+.stSuccess {
+    background: linear-gradient(90deg,
+        rgba(57, 255, 20, 0.25) 0%,
+        rgba(57, 255, 20, 0.08) 100%) !important;
+    border-left: 6px solid var(--raygun-neon-green) !important;
+    border-radius: 0 !important;
+    font-family: 'Space Mono', monospace !important;
+    font-size: 1.05rem !important;
+    padding: 1.25rem 1.5rem !important;
+    clip-path: polygon(0 0, 100% 3%, 100% 97%, 0 100%) !important;
+}
+
+.stWarning {
+    background: linear-gradient(90deg,
+        rgba(255, 230, 0, 0.25) 0%,
+        rgba(255, 230, 0, 0.08) 100%) !important;
+    border-left: 6px solid var(--raygun-electric-yellow) !important;
+    border-radius: 0 !important;
+    font-family: 'Space Mono', monospace !important;
+    font-size: 1.05rem !important;
+    padding: 1.25rem 1.5rem !important;
+    clip-path: polygon(0 0, 100% 3%, 100% 97%, 0 100%) !important;
+}
+
+.stError {
+    background: linear-gradient(90deg,
+        rgba(255, 51, 102, 0.25) 0%,
+        rgba(255, 51, 102, 0.08) 100%) !important;
+    border-left: 6px solid var(--raygun-hot-pink) !important;
+    border-radius: 0 !important;
+    font-family: 'Space Mono', monospace !important;
+    font-size: 1.05rem !important;
+    padding: 1.25rem 1.5rem !important;
+    clip-path: polygon(0 0, 100% 3%, 100% 97%, 0 100%) !important;
+}
+
+.stInfo {
+    background: linear-gradient(90deg,
+        rgba(0, 255, 255, 0.25) 0%,
+        rgba(0, 255, 255, 0.08) 100%) !important;
+    border-left: 6px solid var(--raygun-neon-cyan) !important;
+    border-radius: 0 !important;
+    font-family: 'Space Mono', monospace !important;
+    font-size: 1.05rem !important;
+    padding: 1.25rem 1.5rem !important;
+    clip-path: polygon(0 0, 100% 3%, 100% 97%, 0 100%) !important;
+}
+
+/* === SPINNERS === */
+.stSpinner > div {
+    border-color: var(--raygun-neon-pink) transparent transparent transparent !important;
+    border-width: 4px !important;
+    filter: drop-shadow(0 0 8px var(--raygun-neon-pink));
+}
+
+/* === HORIZONTAL RULES === */
+hr {
+    border: none !important;
+    height: 3px !important;
+    background: linear-gradient(90deg,
+        transparent 0%,
+        var(--raygun-neon-pink) 20%,
+        var(--raygun-neon-cyan) 50%,
+        var(--raygun-neon-pink) 80%,
+        transparent 100%) !important;
+    margin: 1.5rem 0 !important;
+    box-shadow: 0 0 10px rgba(255, 0, 255, 0.3) !important;
+}
+
+/* === EXPANDER === */
+.streamlit-expanderHeader {
+    font-family: 'Space Mono', monospace !important;
+    font-size: 1.1rem !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.12em !important;
+    background: var(--raygun-bg-card) !important;
+    border: 2px solid var(--raygun-neon-cyan) !important;
+    border-radius: 0 !important;
+    padding: 12px 16px !important;
+}
+
+/* === MULTISELECT === */
+[data-baseweb="tag"] {
+    background: var(--raygun-neon-pink) !important;
+    border-radius: 0 !important;
+    font-family: 'Space Mono', monospace !important;
+    font-size: 0.95rem !important;
+    padding: 6px 12px !important;
+}
+
+/* === SLIDER === */
+.stSlider > div > div > div {
+    background: var(--raygun-neon-cyan) !important;
+}
+
+.stSlider > div > div > div > div {
+    background: var(--raygun-neon-pink) !important;
+    border: 3px solid var(--raygun-text-light) !important;
+    width: 20px !important;
+    height: 20px !important;
+}
+
+.stSlider label {
+    font-family: 'Space Mono', monospace !important;
+    font-size: 0.9rem !important;
+    text-transform: uppercase !important;
+    color: var(--raygun-neon-cyan) !important;
+}
+
+/* === PLOTLY CHARTS CONTAINER === */
+[data-testid="stPlotlyChart"],
+.stPlotlyChart {
+    border: 3px solid var(--raygun-neon-pink) !important;
+    box-shadow:
+        6px 6px 0 var(--raygun-neon-cyan),
+        0 0 40px rgba(255, 0, 255, 0.25) !important;
+    padding: var(--space-2) !important;
+    padding-right: 50px !important;
+    margin: var(--space-4) 0 !important;
+    background: var(--raygun-bg-dark) !important;
+    position: relative;
+    overflow: visible !important;
+}
+
+[data-testid="stPlotlyChart"] > div,
+.stPlotlyChart > div {
+    overflow: visible !important;
+}
+
+.js-plotly-plot {
+    border: none !important;
+    box-shadow: none !important;
+    position: relative;
+    overflow: visible !important;
+}
+
+/* Halftone pattern overlay for charts */
+[data-testid="stPlotlyChart"]::before,
+.stPlotlyChart::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: radial-gradient(
+        circle at 1px 1px,
+        rgba(255, 0, 255, 0.02) 1px,
+        transparent 1px
+    );
+    background-size: 5px 5px;
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* Plotly modebar styling */
+.modebar {
+    background: rgba(13, 13, 13, 0.95) !important;
+    border: 2px solid var(--raygun-neon-pink) !important;
+    border-radius: 0 !important;
+    right: 20px !important;
+    top: 10px !important;
+    padding: 5px !important;
+    z-index: 1000 !important;
+}
+
+.modebar-group {
+    background: transparent !important;
+}
+
+.modebar-btn {
+    color: var(--raygun-text-light) !important;
+}
+
+.modebar-btn:hover {
+    color: var(--raygun-neon-pink) !important;
+}
+
+.modebar-btn.active {
+    color: var(--raygun-neon-cyan) !important;
+}
+
+/* === SIDEBAR TITLE STYLES === */
+[data-testid="stSidebar"] .raygun-title-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+    padding: 0.75rem 0.5rem;
+    margin-bottom: 0.75rem;
+}
+
+/* Override h1 styles specifically in sidebar */
+[data-testid="stSidebar"] h1.sidebar-research-title {
+    font-family: 'Bebas Neue', Impact, sans-serif !important;
+    font-size: clamp(36px, 5vw, 52px) !important;
+    letter-spacing: 0.05em !important;
+    text-transform: uppercase !important;
+    color: #FF00FF !important;
+    overflow: visible !important;
+    text-shadow:
+        3px 3px 0 #00FFFF,
+        -2px -2px 0 #39FF14,
+        0 0 20px rgba(255, 0, 255, 0.6),
+        0 0 40px rgba(0, 255, 255, 0.4) !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    line-height: 1 !important;
+    white-space: nowrap !important;
+    transform: none !important;
+    display: block !important;
+    border-bottom: none !important;
+}
+
+[data-testid="stSidebar"] h1.sidebar-research-title:hover {
+    animation: glitch-hard 0.35s ease-in-out infinite !important;
+}
+
+[data-testid="stSidebar"] h1.sidebar-research-title::after {
+    display: none !important;
+}
+
+[data-testid="stSidebar"] .raygun-main-title {
+    font-family: 'Bebas Neue', Impact, sans-serif !important;
+    font-size: clamp(2.4rem, 7vw, 3.2rem) !important;
+    letter-spacing: 0.1em !important;
+    text-transform: uppercase !important;
+    color: var(--raygun-text-light) !important;
+    text-shadow:
+        4px 4px 0 var(--raygun-neon-pink),
+        -2px -2px 0 var(--raygun-neon-cyan),
+        0 0 25px rgba(255, 0, 255, 0.5) !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    line-height: 1 !important;
+    white-space: nowrap !important;
+    transform: rotate(-1deg) !important;
+    display: inline-block !important;
+}
+
+[data-testid="stSidebar"] .raygun-subtitle {
+    font-family: 'Space Mono', monospace !important;
+    font-size: clamp(0.9rem, 3vw, 1.1rem) !important;
+    letter-spacing: 0.35em !important;
+    color: var(--raygun-neon-cyan) !important;
+    text-transform: uppercase !important;
+    margin: 6px 0 0 0 !important;
+    padding: 0 !important;
+    line-height: 1.2 !important;
+    transform: translateX(5px) !important;
+    position: relative;
+}
+
+[data-testid="stSidebar"] .raygun-subtitle::before {
+    content: "//";
+    margin-right: 10px;
+    color: var(--raygun-neon-pink);
+    opacity: 0.8;
+}
+
+/* Gradient underline for sidebar title */
+[data-testid="stSidebar"] .raygun-title-underline {
+    width: 100%;
+    height: 4px;
+    margin-top: 10px;
+    background: linear-gradient(90deg,
+        var(--raygun-neon-pink) 0%,
+        var(--raygun-neon-cyan) 50%,
+        var(--raygun-neon-green) 100%);
+    box-shadow:
+        0 0 15px var(--raygun-neon-pink),
+        0 0 25px rgba(0, 255, 255, 0.4);
+    transform: skewX(-10deg);
+}
+
+
+/* === GLITCH ANIMATION FOR HEADERS === */
+@keyframes glitch-hard {
+    0% {
+        text-shadow:
+            4px 4px 0 var(--raygun-neon-pink),
+            -2px -2px 0 var(--raygun-neon-cyan);
+        transform: rotate(-0.5deg);
+    }
+    20% {
+        text-shadow:
+            -4px -3px 0 var(--raygun-neon-pink),
+            3px 2px 0 var(--raygun-neon-cyan);
+        transform: rotate(0deg) translateX(2px);
+    }
+    40% {
+        text-shadow:
+            3px -4px 0 var(--raygun-neon-pink),
+            -2px 3px 0 var(--raygun-neon-cyan);
+        transform: rotate(-1deg) translateX(-2px);
+    }
+    60% {
+        text-shadow:
+            -2px 4px 0 var(--raygun-neon-pink),
+            4px -2px 0 var(--raygun-neon-cyan);
+        transform: rotate(0.5deg);
+    }
+    80% {
+        text-shadow:
+            2px -2px 0 var(--raygun-neon-pink),
+            -4px 4px 0 var(--raygun-neon-cyan);
+        transform: rotate(-0.3deg);
+    }
+    100% {
+        text-shadow:
+            4px 4px 0 var(--raygun-neon-pink),
+            -2px -2px 0 var(--raygun-neon-cyan);
+        transform: rotate(-0.5deg);
+    }
+}
+
+h1:hover {
+    animation: glitch-hard 0.35s ease-in-out infinite !important;
+}
+
+/* === ANIMATED PULSE BAR ON SIDEBAR === */
+[data-testid="stSidebar"]::after {
+    content: "";
+    position: absolute;
+    top: 12%;
+    right: -4px;
+    width: 4px;
+    height: 40%;
+    background: linear-gradient(180deg,
+        transparent,
+        var(--raygun-neon-cyan),
+        var(--raygun-neon-pink),
+        transparent);
+    animation: pulse-bar 3s ease-in-out infinite;
+    z-index: 10;
+}
+
+@keyframes pulse-bar {
+    0%, 100% { opacity: 0.5; height: 40%; top: 12%; }
+    50% { opacity: 1; height: 50%; top: 10%; }
+}
+
+/* === GRAIN TEXTURE OVERLAY === */
+.stApp::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='grain'%3E%3CfeTurbulence type='turbulence' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23grain)' opacity='0.04'/%3E%3C/svg%3E");
+    z-index: 9998;
+    mix-blend-mode: overlay;
+}
+
+/* === CUSTOM SCROLLBAR === */
+::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--raygun-bg-dark);
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, var(--raygun-neon-pink), var(--raygun-neon-cyan));
+    border: 3px solid var(--raygun-bg-dark);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--raygun-neon-pink);
+}
+
+
+/* === MARKDOWN TEXT - HIGHLY READABLE === */
+.stMarkdown {
+    overflow: visible !important;
+}
+
+.stMarkdown p {
+    font-size: 0.85rem !important;
+    margin-bottom: 0.4rem !important;
+    line-height: 1.4 !important;
+    color: var(--raygun-text-light) !important;
+    letter-spacing: 0.01em !important;
+}
+
+.stMarkdown strong {
+    color: var(--raygun-neon-cyan) !important;
+    font-weight: 700 !important;
+    font-size: 1em !important;
+    text-shadow: 0 0 6px rgba(0, 255, 255, 0.4) !important;
+}
+
+/* === SUBHEADER SPECIAL STYLING - LEGIBLE & PROMINENT === */
+[data-testid="stSubheader"] {
+    font-family: 'Bebas Neue', Impact, sans-serif !important;
+    font-size: 1rem !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.1em !important;
+    color: var(--raygun-neon-cyan) !important;
+    border-left: 3px solid var(--raygun-neon-pink) !important;
+    padding-left: 10px !important;
+    margin: 0.75rem 0 0.5rem 0 !important;
+    text-shadow: 0 0 8px rgba(0, 255, 255, 0.4) !important;
+}
+
+/* === RESPONSIVE - MAINTAIN IMPACT === */
+@media (max-width: 768px) {
+    .main .block-container {
+        padding: 0.75rem 1rem !important;
+    }
+
+    h1 {
+        font-size: clamp(2rem, 6vw, 2.8rem) !important;
+        transform: none !important;
+        letter-spacing: 0.08em !important;
+    }
+
+    h2 {
+        font-size: clamp(1.3rem, 4vw, 1.8rem) !important;
+        letter-spacing: 0.1em !important;
+    }
+
+    h3 {
+        font-size: 1.1rem !important;
+    }
+
+    [data-testid="stMetric"] {
+        clip-path: none !important;
+        padding: 1rem !important;
+    }
+
+    [data-testid="stMetric"] label {
+        font-size: 0.85rem !important;
+    }
+
+    [data-testid="stMetric"] [data-testid="stMetricValue"] {
+        font-size: 1.8rem !important;
+    }
+
+    [data-testid="stSidebar"] .raygun-main-title {
+        font-size: 2rem !important;
+    }
+
+    [data-testid="stSidebar"] .raygun-subtitle {
+        font-size: 0.8rem !important;
+        letter-spacing: 0.2em !important;
+    }
+
+    .stTabs [data-baseweb="tab"] {
+        font-size: 1rem !important;
+        padding: 10px 14px !important;
+    }
+}
+
+/* === WIDE MODE OPTIMIZATION === */
+@media (min-width: 1400px) {
+    .main .block-container {
+        padding: 1.5rem 3rem 2rem 3rem !important;
+    }
+
+    h1 {
+        font-size: 4.5rem !important;
+    }
+
+    [data-testid="stMetric"] [data-testid="stMetricValue"] {
+        font-size: 3.5rem !important;
+    }
+
+    [data-testid="stMetric"] label {
+        font-size: 1.1rem !important;
+    }
+}
+
+/* === RADIO BUTTONS === */
+.stRadio > label {
+    font-family: 'Space Mono', monospace !important;
+    font-size: 0.9rem !important;
+    text-transform: uppercase !important;
+    color: var(--raygun-neon-cyan) !important;
+}
+
+.stRadio [data-testid="stMarkdownContainer"] {
+    font-size: 1rem !important;
+}
+
+/* === NUMBER INPUT === */
+.stNumberInput label {
+    font-family: 'Space Mono', monospace !important;
+    font-size: 0.9rem !important;
+    text-transform: uppercase !important;
+    color: var(--raygun-neon-cyan) !important;
+}
+
+.stNumberInput input {
+    font-family: 'Space Mono', monospace !important;
+    font-size: 1.1rem !important;
+    background: rgba(13, 13, 13, 0.95) !important;
+    border: 3px solid var(--raygun-neon-cyan) !important;
+    color: var(--raygun-text-light) !important;
+}
+
+/* === ENSURE FULL WIDTH USAGE === */
+[data-testid="stVerticalBlock"] > [data-testid="stHorizontalBlock"] {
+    width: 100% !important;
+}
+
+/* === WRITE SECTIONS === */
+.stWrite {
+    font-size: 1.15rem !important;
+    line-height: 1.5 !important;
+}
+
+/* === GLOBAL TEXT LEGIBILITY === */
+.stApp p, .stApp span, .stApp div {
+    font-size: inherit;
+}
+
+/* All text containers - better base size */
+[data-testid="stVerticalBlock"] p,
+[data-testid="stVerticalBlock"] span:not([data-testid]),
+.element-container p {
+    font-size: 0.85rem !important;
+    line-height: 1.4 !important;
+    color: var(--raygun-text-light) !important;
+}
+
+/* Column text specifically */
+[data-testid="stHorizontalBlock"] p {
+    font-size: 0.85rem !important;
+    margin-bottom: 0.3rem !important;
+}
+
+/* Text labels (like "Nombre:", "Sector:") */
+[data-testid="stVerticalBlock"] strong,
+.stMarkdown strong {
+    color: var(--raygun-neon-cyan) !important;
+    font-size: 1em !important;
+}
+
+/* === MARKET TICKER BANNER === */
+.ticker-wrap {
+    width: 100%;
+    overflow: hidden;
+    background: linear-gradient(90deg, #0D0D0D 0%, #1A1A2E 50%, #0D0D0D 100%);
+    border-bottom: 2px solid var(--raygun-neon-pink);
+    border-top: 2px solid var(--raygun-neon-cyan);
+    padding: 8px 0;
+    position: relative;
+    box-shadow: 0 4px 20px rgba(255, 0, 255, 0.3);
+}
+
+.ticker-wrap::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 80px;
+    height: 100%;
+    background: linear-gradient(90deg, #0D0D0D 0%, transparent 100%);
+    z-index: 2;
+    pointer-events: none;
+}
+
+.ticker-wrap::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 80px;
+    height: 100%;
+    background: linear-gradient(90deg, transparent 0%, #0D0D0D 100%);
+    z-index: 2;
+    pointer-events: none;
+}
+
+.ticker {
+    display: inline-flex;
+    white-space: nowrap;
+    animation: ticker-scroll 60s linear infinite;
+}
+
+.ticker:hover {
+    animation-play-state: paused;
+}
+
+@keyframes ticker-scroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+
+.ticker-item {
+    display: inline-flex;
+    align-items: center;
+    padding: 0 16px;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.75rem;
+    border-right: 1px solid rgba(255, 0, 255, 0.3);
+}
+
+.ticker-symbol {
+    color: var(--raygun-neon-cyan);
+    font-weight: 700;
+    font-size: 0.8rem;
+    margin-right: 8px;
+    text-shadow: 0 0 6px rgba(0, 255, 255, 0.5);
+}
+
+.ticker-price {
+    color: var(--raygun-text-light);
+    font-weight: 600;
+    margin-right: 6px;
+    font-size: 0.75rem;
+}
+
+.ticker-change {
+    font-weight: 700;
+    font-size: 0.7rem;
+    padding: 2px 5px;
+    border-radius: 0;
+}
+
+.ticker-change.positive {
+    color: #39FF14;
+    background: rgba(57, 255, 20, 0.15);
+    text-shadow: 0 0 6px rgba(57, 255, 20, 0.5);
+}
+
+.ticker-change.negative {
+    color: #FF3366;
+    background: rgba(255, 51, 102, 0.15);
+    text-shadow: 0 0 6px rgba(255, 51, 102, 0.5);
+}
+
+.ticker-index {
+    color: var(--raygun-electric-yellow);
+    font-weight: 700;
+    text-shadow: 0 0 8px rgba(255, 230, 0, 0.5);
+}
+
+.ticker-commodity {
+    color: var(--raygun-grunge-orange);
+    font-weight: 700;
+    text-shadow: 0 0 8px rgba(255, 107, 53, 0.5);
+}
