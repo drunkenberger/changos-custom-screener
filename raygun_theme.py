@@ -1193,7 +1193,61 @@ def get_centered_title(main_text, subtitle_text):
     if t['style'] == 'corporate':
         # Corporate: clean left-aligned institutional title
         return f'<div style="text-align:left;padding:1rem 0;border-bottom:1px solid #2a2a2a;margin-bottom:1rem;"><h1 style="font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,sans-serif;font-size:1.5rem;font-weight:500;text-transform:uppercase;letter-spacing:0.05em;color:#f0f0f0;margin:0;">{main_text}</h1><span style="font-family:SF Mono,Monaco,Consolas,monospace;font-size:0.7rem;letter-spacing:0.1em;color:#666;text-transform:uppercase;">{subtitle_text}</span></div>'
-    return f"""<div style="text-align:center;padding:0.8rem 0 0.5rem 0;margin-bottom:0.3rem;position:relative;width:100%;overflow:visible !important;"><div style="position:absolute;top:0;left:5%;width:90%;height:3px;background:linear-gradient(90deg,transparent,#FF00FF,#00FFFF,#FF00FF,transparent);"></div><h1 class="main-app-title" style="font-family:Bebas Neue,Impact,sans-serif;font-size:12vw !important;letter-spacing:0.05em;text-transform:uppercase;color:#E0E0E0 !important;text-shadow:3px 3px 0 #FF00FF,-2px -2px 0 #00FFFF,0 0 30px rgba(255,0,255,0.7),0 0 50px rgba(0,255,255,0.3) !important;margin:0 !important;padding:0 !important;line-height:1 !important;display:block;width:100%;transform:none !important;white-space:nowrap !important;overflow:visible !important;">{main_text}</h1><div style="font-family:Space Mono,monospace;font-size:0.6rem;letter-spacing:0.2em;color:#00FFFF;text-transform:uppercase;margin-top:5px;text-shadow:0 0 8px rgba(0,255,255,0.5);">/// {subtitle_text} ///</div><div style="width:50%;height:2px;margin:6px auto 0 auto;background:linear-gradient(90deg,transparent,#FF00FF 15%,#00FFFF 50%,#39FF14 85%,transparent);box-shadow:0 0 12px rgba(255,0,255,0.4);"></div></div>"""
+    # Raygun style - large neon title
+    return f"""
+    <style>
+        .raygun-hero-container {{
+            text-align: center;
+            padding: 1.5rem 0 1rem 0;
+            margin-bottom: 0.5rem;
+            position: relative;
+            width: 100%;
+        }}
+        .raygun-hero-container .gradient-line {{
+            position: absolute;
+            top: 0;
+            left: 5%;
+            width: 90%;
+            height: 4px;
+            background: linear-gradient(90deg, transparent, #FF00FF, #00FFFF, #FF00FF, transparent);
+        }}
+        .raygun-hero-container h1.raygun-main-title {{
+            font-family: 'Bebas Neue', Impact, sans-serif !important;
+            font-size: clamp(3rem, 10vw, 6rem) !important;
+            letter-spacing: 0.05em !important;
+            text-transform: uppercase !important;
+            color: #E0E0E0 !important;
+            text-shadow: 4px 4px 0 #FF00FF, -3px -3px 0 #00FFFF, 0 0 40px rgba(255,0,255,0.7), 0 0 60px rgba(0,255,255,0.3) !important;
+            margin: 0 !important;
+            padding: 0.5rem 0 !important;
+            line-height: 1.1 !important;
+            display: block !important;
+            width: 100% !important;
+        }}
+        .raygun-hero-container .raygun-subtitle {{
+            font-family: 'Space Mono', monospace;
+            font-size: 0.75rem;
+            letter-spacing: 0.2em;
+            color: #00FFFF;
+            text-transform: uppercase;
+            margin-top: 8px;
+            text-shadow: 0 0 10px rgba(0,255,255,0.6);
+        }}
+        .raygun-hero-container .bottom-gradient {{
+            width: 60%;
+            height: 3px;
+            margin: 10px auto 0 auto;
+            background: linear-gradient(90deg, transparent, #FF00FF 15%, #00FFFF 50%, #39FF14 85%, transparent);
+            box-shadow: 0 0 15px rgba(255,0,255,0.5);
+        }}
+    </style>
+    <div class="raygun-hero-container">
+        <div class="gradient-line"></div>
+        <h1 class="raygun-main-title">{main_text}</h1>
+        <div class="raygun-subtitle">/// {subtitle_text} ///</div>
+        <div class="bottom-gradient"></div>
+    </div>
+    """
 
 
 def get_sidebar_section(title):
