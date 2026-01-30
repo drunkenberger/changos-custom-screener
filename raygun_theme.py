@@ -1193,52 +1193,71 @@ def get_centered_title(main_text, subtitle_text):
     if t['style'] == 'corporate':
         # Corporate: clean left-aligned institutional title
         return f'<div style="text-align:left;padding:1rem 0;border-bottom:1px solid #2a2a2a;margin-bottom:1rem;"><h1 style="font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,sans-serif;font-size:1.5rem;font-weight:500;text-transform:uppercase;letter-spacing:0.05em;color:#f0f0f0;margin:0;">{main_text}</h1><span style="font-family:SF Mono,Monaco,Consolas,monospace;font-size:0.7rem;letter-spacing:0.1em;color:#666;text-transform:uppercase;">{subtitle_text}</span></div>'
-    # Raygun style - large neon title
+    # Raygun style - large neon title that fills the width
     return f"""
     <style>
+        /* Force Streamlit container to use full width for hero */
+        .stMarkdown:has(.raygun-hero-container) {{
+            max-width: 100% !important;
+            width: 100% !important;
+        }}
         .raygun-hero-container {{
             text-align: center;
-            padding: 1.5rem 0 1rem 0;
+            padding: 2rem 0 1.5rem 0;
             margin-bottom: 0.5rem;
             position: relative;
-            width: 100%;
+            width: 100vw;
+            margin-left: calc(-50vw + 50%);
+            overflow: hidden;
         }}
         .raygun-hero-container .gradient-line {{
             position: absolute;
             top: 0;
-            left: 5%;
-            width: 90%;
+            left: 0;
+            width: 100%;
             height: 4px;
-            background: linear-gradient(90deg, transparent, #FF00FF, #00FFFF, #FF00FF, transparent);
+            background: linear-gradient(90deg, transparent 5%, #FF00FF 20%, #00FFFF 50%, #FF00FF 80%, transparent 95%);
         }}
         .raygun-hero-container h1.raygun-main-title {{
-            font-family: 'Bebas Neue', Impact, sans-serif !important;
-            font-size: clamp(3rem, 10vw, 6rem) !important;
-            letter-spacing: 0.05em !important;
+            font-family: 'Bebas Neue', Impact, 'Arial Black', sans-serif !important;
+            font-size: 7vw !important;
+            letter-spacing: 0.12em !important;
             text-transform: uppercase !important;
-            color: #E0E0E0 !important;
-            text-shadow: 4px 4px 0 #FF00FF, -3px -3px 0 #00FFFF, 0 0 40px rgba(255,0,255,0.7), 0 0 60px rgba(0,255,255,0.3) !important;
-            margin: 0 !important;
-            padding: 0.5rem 0 !important;
-            line-height: 1.1 !important;
+            color: #F0F0F0 !important;
+            text-shadow:
+                6px 6px 0 #FF00FF,
+                -4px -4px 0 #00FFFF,
+                0 0 60px rgba(255,0,255,0.9),
+                0 0 100px rgba(0,255,255,0.5),
+                0 0 150px rgba(255,0,255,0.3) !important;
+            margin: 0 auto !important;
+            padding: 0.5rem 2rem !important;
+            line-height: 1 !important;
             display: block !important;
-            width: 100% !important;
+            white-space: nowrap !important;
+            -webkit-text-stroke: 1px rgba(255,0,255,0.3);
         }}
         .raygun-hero-container .raygun-subtitle {{
-            font-family: 'Space Mono', monospace;
-            font-size: 0.75rem;
-            letter-spacing: 0.2em;
+            font-family: 'Space Mono', 'Courier New', monospace;
+            font-size: 1rem;
+            letter-spacing: 0.25em;
             color: #00FFFF;
             text-transform: uppercase;
-            margin-top: 8px;
-            text-shadow: 0 0 10px rgba(0,255,255,0.6);
+            margin-top: 12px;
+            text-shadow: 0 0 15px rgba(0,255,255,0.7);
         }}
         .raygun-hero-container .bottom-gradient {{
-            width: 60%;
-            height: 3px;
-            margin: 10px auto 0 auto;
+            width: 80%;
+            height: 4px;
+            margin: 15px auto 0 auto;
             background: linear-gradient(90deg, transparent, #FF00FF 15%, #00FFFF 50%, #39FF14 85%, transparent);
-            box-shadow: 0 0 15px rgba(255,0,255,0.5);
+            box-shadow: 0 0 20px rgba(255,0,255,0.6), 0 0 40px rgba(0,255,255,0.3);
+        }}
+        @media (max-width: 768px) {{
+            .raygun-hero-container h1.raygun-main-title {{
+                font-size: 9vw !important;
+                letter-spacing: 0.08em !important;
+            }}
         }}
     </style>
     <div class="raygun-hero-container">
